@@ -69,6 +69,7 @@ public class ComplexScheme implements Scheme<Complex> {
 
     @Override
     public SchemeMatrixDto<Complex> getSchemeMatrices() {
+        cleanNodesPotentials();
         int nodes = indexesByNodes.size();
         int branches = indexesByEquipments.size();
         FieldMatrix<Complex> A = new Array2DRowFieldMatrix<>(Complex.ZERO.getField(), nodes-1, branches);
@@ -126,6 +127,12 @@ public class ComplexScheme implements Scheme<Complex> {
                         indexesByEquipments.get(l2),
                         mutualInduction)
         );
+    }
+
+    private void cleanNodesPotentials() {
+        for (Node<Complex> node: indexesByNodes.keySet()) {
+            node.setPotential(Complex.ZERO);
+        }
     }
 
     private void showMatrix(FieldMatrix<Complex> matrix) {

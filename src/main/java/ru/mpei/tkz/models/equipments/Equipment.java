@@ -1,17 +1,17 @@
 package ru.mpei.tkz.models.equipments;
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 import org.apache.commons.math3.FieldElement;
 import ru.mpei.tkz.models.nodes.Node;
+
+import java.util.Objects;
 
 
 /**
  * Base equipment (with two connection nodes)
  * @param <T>
  */
-@EqualsAndHashCode
 @ToString
 public abstract class Equipment<T extends FieldElement<T>> {
     protected static final double TOLERANCE = 10E-10;
@@ -58,5 +58,17 @@ public abstract class Equipment<T extends FieldElement<T>> {
      */
     public T getEquipmentResistance() {
         return resistance;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Equipment<?> equipment)) return false;
+        return type.equals(equipment.type) && name.equals(equipment.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(type, name);
     }
 }
