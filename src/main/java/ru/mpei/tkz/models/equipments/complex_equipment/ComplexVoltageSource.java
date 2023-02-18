@@ -1,11 +1,11 @@
 package ru.mpei.tkz.models.equipments.complex_equipment;
 
 import org.apache.commons.math3.complex.Complex;
-import ru.mpei.tkz.models.equipments.Equipment;
+import ru.mpei.tkz.models.equipments.base_equipment.VoltageSource;
 import ru.mpei.tkz.models.nodes.ComplexNode;
 import ru.mpei.tkz.models.nodes.Node;
 
-public class ComplexVoltageSource extends Equipment<Complex> {
+public class ComplexVoltageSource extends VoltageSource<Complex> {
     private Complex voltage;
 
     public ComplexVoltageSource(String name, double voltage, double phase) {

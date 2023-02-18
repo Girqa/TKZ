@@ -4,7 +4,7 @@ import org.apache.commons.math3.complex.Complex;
 import ru.mpei.tkz.models.equipments.Equipment;
 import ru.mpei.tkz.models.equipments.complex_equipment.*;
 
-public class ComplexElementFactory implements SchemeElementFactory<Complex> {
+public class ComplexEquipmentFactory implements SchemeEquipmentFactory<Complex> {
     @Override
     public Equipment<Complex> getCapacitor(String name, double capacity) {
         return new ComplexCapacitor(name, capacity);

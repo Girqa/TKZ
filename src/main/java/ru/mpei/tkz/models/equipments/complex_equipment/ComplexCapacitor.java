@@ -1,11 +1,11 @@
 package ru.mpei.tkz.models.equipments.complex_equipment;
 
 import org.apache.commons.math3.complex.Complex;
-import ru.mpei.tkz.models.equipments.Equipment;
+import ru.mpei.tkz.models.equipments.base_equipment.Capacitor;
 import ru.mpei.tkz.models.nodes.ComplexNode;
 import ru.mpei.tkz.models.nodes.Node;
 
-public class ComplexCapacitor extends Equipment<Complex> {
+public class ComplexCapacitor extends Capacitor<Complex> {
     protected final String type = "capacitor";
     public ComplexCapacitor(String name, double capacity) {
         this(

@@ -2,7 +2,7 @@ package ru.mpei.tkz.models.connections;
 
 import org.apache.commons.math3.FieldElement;
 import ru.mpei.tkz.models.enums.Side;
-import ru.mpei.tkz.models.equipments.composite_equipment.CompositeEquipment;
+import ru.mpei.tkz.models.equipments.composite_equipment.CompositeThreePhaseEquipment;
 import ru.mpei.tkz.models.nodes.three_phase_nodes.ThreePhaseNode;
 
 import java.util.HashMap;
@@ -12,7 +12,7 @@ import java.util.Map;
  * Provides connection between ThreePhaseNodes
  */
 public class ThreePhaseConnection<T extends FieldElement<T>> {
-    private final Map<CompositeEquipment<T>, ThreePhaseNode<T>> connectedNodesByEquipment;
+    private final Map<CompositeThreePhaseEquipment<T>, ThreePhaseNode<T>> connectedNodesByEquipment;
     private final ThreePhaseNode<T> thisNode;
 
     public ThreePhaseConnection(ThreePhaseNode<T> node) {
@@ -25,7 +25,7 @@ public class ThreePhaseConnection<T extends FieldElement<T>> {
      * @param equipment to be connected
      * @param side - which side (start, end) of equipment should be connected
      */
-    public void connectEquipment(CompositeEquipment<T> equipment, Side side) {
+    public void connectEquipment(CompositeThreePhaseEquipment<T> equipment, Side side) {
         switch (side) {
             case START -> {
                 connectedNodesByEquipment.put(equipment, equipment.getStartNode());
@@ -40,10 +40,10 @@ public class ThreePhaseConnection<T extends FieldElement<T>> {
 
     /**
      * Disconnects given equipment from this node
-     * @param equipment ti be disconnected
+     * @param equipment to be disconnected
      * @throws IllegalArgumentException if given equipment is not connected to this node
      */
-    public void disconnectEquipment(CompositeEquipment<T> equipment) throws IllegalArgumentException {
+    public void disconnectEquipment(CompositeThreePhaseEquipment<T> equipment) throws IllegalArgumentException {
         if (!connectedNodesByEquipment.containsKey(equipment)) {
             throw new IllegalArgumentException("Given equipment is not connected to this node");
         }

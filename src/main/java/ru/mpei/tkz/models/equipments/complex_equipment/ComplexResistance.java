@@ -1,11 +1,11 @@
 package ru.mpei.tkz.models.equipments.complex_equipment;
 
 import org.apache.commons.math3.complex.Complex;
-import ru.mpei.tkz.models.equipments.Equipment;
+import ru.mpei.tkz.models.equipments.base_equipment.Resistance;
 import ru.mpei.tkz.models.nodes.ComplexNode;
 import ru.mpei.tkz.models.nodes.Node;
 
-public class ComplexResistance extends Equipment<Complex> {
+public class ComplexResistance extends Resistance<Complex> {
     public ComplexResistance(String name, double resistance) {
         this(
                 name,

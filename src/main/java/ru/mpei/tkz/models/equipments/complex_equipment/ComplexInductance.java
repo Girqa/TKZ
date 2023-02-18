@@ -1,11 +1,11 @@
 package ru.mpei.tkz.models.equipments.complex_equipment;
 
 import org.apache.commons.math3.complex.Complex;
-import ru.mpei.tkz.models.equipments.Equipment;
+import ru.mpei.tkz.models.equipments.base_equipment.Inductance;
 import ru.mpei.tkz.models.nodes.ComplexNode;
 import ru.mpei.tkz.models.nodes.Node;
 
-public class ComplexInductance extends Equipment<Complex> {
+public class ComplexInductance extends Inductance<Complex> {
 
     public ComplexInductance(String name, double inductance) {
         this(

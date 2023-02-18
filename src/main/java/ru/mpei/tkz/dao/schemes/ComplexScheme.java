@@ -10,10 +10,7 @@ import ru.mpei.tkz.models.equipments.Equipment;
 import ru.mpei.tkz.models.equipments.complex_equipment.ComplexInductance;
 import ru.mpei.tkz.models.nodes.Node;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @ToString
 public class ComplexScheme implements Scheme<Complex> {
@@ -61,6 +58,11 @@ public class ComplexScheme implements Scheme<Complex> {
         for (Equipment<Complex> equipment: equipments) {
             addEquipment(equipment);
         }
+    }
+
+    @Override
+    public void addEquipments(Collection<Equipment<Complex>> equipments) {
+        equipments.forEach(this::addEquipment);
     }
 
     @Override
