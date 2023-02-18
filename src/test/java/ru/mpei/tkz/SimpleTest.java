@@ -5,9 +5,9 @@ import org.apache.commons.math3.linear.FieldVector;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import ru.mpei.tkz.dao.schemes.ComplexScheme;
-import ru.mpei.tkz.models.equipments.complexEquipment.ComplexInductance;
-import ru.mpei.tkz.models.equipments.complexEquipment.ComplexResistance;
-import ru.mpei.tkz.models.equipments.complexEquipment.ComplexVoltageSource;
+import ru.mpei.tkz.models.equipments.complex_equipment.ComplexInductance;
+import ru.mpei.tkz.models.equipments.complex_equipment.ComplexResistance;
+import ru.mpei.tkz.models.equipments.complex_equipment.ComplexVoltageSource;
 import ru.mpei.tkz.models.nodes.ComplexNode;
 import ru.mpei.tkz.services.SolverService;
 

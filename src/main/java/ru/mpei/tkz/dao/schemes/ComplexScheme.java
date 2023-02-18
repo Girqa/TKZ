@@ -7,7 +7,7 @@ import org.apache.commons.math3.complex.Complex;
 import org.apache.commons.math3.linear.*;
 import ru.mpei.tkz.models.dto.SchemeMatrixDto;
 import ru.mpei.tkz.models.equipments.Equipment;
-import ru.mpei.tkz.models.equipments.complexEquipment.ComplexInductance;
+import ru.mpei.tkz.models.equipments.complex_equipment.ComplexInductance;
 import ru.mpei.tkz.models.nodes.Node;
 
 import java.util.ArrayList;
@@ -53,6 +53,13 @@ public class ComplexScheme implements Scheme<Complex> {
             if (!indexesByNodes.containsKey(endNode)) {
                 indexesByNodes.put(equipment.getEndNode(), indexesByNodes.size());
             }
+        }
+    }
+
+    @Override
+    public void addEquipments(Equipment<Complex>... equipments) {
+        for (Equipment<Complex> equipment: equipments) {
+            addEquipment(equipment);
         }
     }
 

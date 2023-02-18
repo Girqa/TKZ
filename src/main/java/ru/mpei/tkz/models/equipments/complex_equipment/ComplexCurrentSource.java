@@ -1,11 +1,22 @@
-package ru.mpei.tkz.models.equipments.complexEquipment;
+package ru.mpei.tkz.models.equipments.complex_equipment;
 
 import org.apache.commons.math3.complex.Complex;
 import ru.mpei.tkz.models.equipments.Equipment;
+import ru.mpei.tkz.models.nodes.ComplexNode;
 import ru.mpei.tkz.models.nodes.Node;
 
 public class ComplexCurrentSource extends Equipment<Complex> {
     private Complex current;
+
+    public ComplexCurrentSource(String name, double current, double phase) {
+        this(
+                name,
+                new ComplexNode(name + "_current source_" + "start node"),
+                new ComplexNode(name + "_current source_" + "end node"),
+                current,
+                phase);
+    }
+
     /**
      * @param current - amperes
      * @param phase - degrees

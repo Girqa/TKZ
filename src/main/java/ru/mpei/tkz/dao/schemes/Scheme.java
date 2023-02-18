@@ -7,6 +7,7 @@ import ru.mpei.tkz.models.equipments.Equipment;
 
 public interface Scheme<T extends FieldElement<T>> {
     void addEquipment(Equipment<T> equipment);
+    void addEquipments(Equipment<T>... equipments);
     SchemeMatrixDto<T> getSchemeMatrices();
     void updateScheme(FieldVector<T> potentialsMatrix);
 }

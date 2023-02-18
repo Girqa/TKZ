@@ -1,6 +1,7 @@
 package ru.mpei.tkz.models.equipments;
 
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 import org.apache.commons.math3.FieldElement;
 import ru.mpei.tkz.models.nodes.Node;
@@ -17,11 +18,11 @@ public abstract class Equipment<T extends FieldElement<T>> {
     protected static final double TOLERANCE = 10E-10;
     @Getter
     protected String type;
-    @Getter
+    @Getter@Setter
     protected String name;
-    @Getter
+    @Getter@Setter
     protected Node<T> startNode;
-    @Getter
+    @Getter@Setter
     protected Node<T> endNode;
 
     protected T resistance;
