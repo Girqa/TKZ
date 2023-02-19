@@ -1,22 +1,31 @@
 package ru.mpei.tkz.models.equipments.complex_equipment.composite;
 
 import org.apache.commons.math3.complex.Complex;
-import ru.mpei.tkz.models.equipments.base_equipment.Inductance;
+import ru.mpei.tkz.models.equipments.Equipment;
 import ru.mpei.tkz.models.equipments.complex_equipment.ComplexInductance;
-import ru.mpei.tkz.models.equipments.composite_equipment.SimpleTransformer;
+import ru.mpei.tkz.models.equipments.composite_equipment.CoupledCoils;
 
-public class SimpleComplexTransformer extends SimpleTransformer<Complex> {
-    public SimpleComplexTransformer(String name, double l1, double l2, double m) {
-        super(name, l1, l2, m);
-        this.xl1 = new CoupledComplexInductance(name + "_l1", l1);
-        this.xl2 = new CoupledComplexInductance(name + "_l2", l2);
+import java.util.Collection;
+import java.util.List;
+
+public class ComplexCoupledCoils extends CoupledCoils<Complex> {
+    public ComplexCoupledCoils(String name, double l1, double l2, double m) {
+        super(name);
+        this.xl1 = new CoupledComplexInductance(name + "_hv", l1);
+        this.xl2 = new CoupledComplexInductance(name + "_lv", l2);
         ((CoupledComplexInductance) xl1).setCouple(xl2);
         ((CoupledComplexInductance) xl2).setCouple(xl1);
         this.mutualInduction = new Complex(0, m * 2 * Math.PI * 50);
     }
 
+    @Override
+    public Collection<Equipment<Complex>> getEquipment() {
+        return List.of(xl1, xl2);
+    }
+
+
     private class CoupledComplexInductance extends ComplexInductance {
-        private Inductance<Complex> couple;
+        private Equipment<Complex> couple;
 
         public CoupledComplexInductance(String name, double inductance) {
             super(name, inductance);
@@ -34,7 +43,7 @@ public class SimpleComplexTransformer extends SimpleTransformer<Complex> {
             return current;
         }
 
-        public void setCouple(Inductance<Complex> couple) {
+        public void setCouple(Equipment<Complex> couple) {
             this.couple = couple;
         }
     }

@@ -1,4 +1,4 @@
-package ru.mpei.tkz;
+package ru.mpei.tkz.models;
 
 import org.apache.commons.math3.complex.Complex;
 

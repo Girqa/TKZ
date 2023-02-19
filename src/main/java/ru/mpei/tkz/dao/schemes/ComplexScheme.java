@@ -8,7 +8,7 @@ import org.apache.commons.math3.linear.*;
 import ru.mpei.tkz.models.dto.MagneticallyCoupledInductors;
 import ru.mpei.tkz.models.dto.SchemeMatrixDto;
 import ru.mpei.tkz.models.equipments.Equipment;
-import ru.mpei.tkz.models.equipments.base_equipment.Inductance;
+import ru.mpei.tkz.models.equipments.composite_equipment.CoupledCoils;
 import ru.mpei.tkz.models.nodes.Node;
 
 import java.util.*;
@@ -67,6 +67,24 @@ public class ComplexScheme implements Scheme<Complex> {
     }
 
     @Override
+    public void addCoupledEquipment(CoupledCoils<Complex> coupledCoils) {
+        addEquipments(coupledCoils.getEquipment());
+        coupleInductances(coupledCoils.getCoupledInductances());
+    }
+
+    @Override
+    public void addCoupledEquipments(CoupledCoils<Complex>... coupledCoils) {
+        for (CoupledCoils<Complex> couple: coupledCoils) {
+            addCoupledEquipment(couple);
+        }
+    }
+
+    @Override
+    public void addCoupledEquipments(Collection<CoupledCoils<Complex>> coupledCoils) {
+        coupledCoils.forEach(this::addCoupledEquipment);
+    }
+
+    @Override
     public void updateScheme(FieldVector<Complex> potentialsMatrix) {
         for (Node<Complex> node: indexesByNodes.keySet()) {
             int i = indexesByNodes.get(node);
@@ -77,13 +95,8 @@ public class ComplexScheme implements Scheme<Complex> {
         }
     }
 
-    /**
-     * Magnetically couples two inductances
-     * @param l1 - hv inductance, * will be at start node
-     * @param l2 - lv inductance, * will be at end node
-     */
     @Override
-    public void coupleInductances(Inductance<Complex> l1, Inductance<Complex> l2, Complex mutualInduction)  throws IllegalArgumentException {
+    public void coupleInductances(Equipment<Complex> l1, Equipment<Complex> l2, Complex mutualInduction)  throws IllegalArgumentException {
         if (!indexesByEquipments.containsKey(l1)) {
             throw new IllegalArgumentException("Scheme doesn't contain l1 equipment");
         }

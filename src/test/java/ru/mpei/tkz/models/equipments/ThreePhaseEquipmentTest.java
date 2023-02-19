@@ -11,6 +11,8 @@ import ru.mpei.tkz.models.enums.LoadType;
 import ru.mpei.tkz.models.enums.Side;
 import ru.mpei.tkz.models.equipments.complex_equipment.composite.ThreePhaseComplexLoad;
 import ru.mpei.tkz.models.equipments.complex_equipment.composite.ThreePhaseComplexVoltageSource;
+import ru.mpei.tkz.models.equipments.complex_equipment.composite.ThreePhaseComplexYgDTransformer;
+import ru.mpei.tkz.models.equipments.composite_equipment.CoupledCoils;
 import ru.mpei.tkz.models.nodes.three_phase_nodes.ThreePhaseComplexGround;
 import ru.mpei.tkz.models.nodes.three_phase_nodes.ThreePhaseComplexPointNode;
 import ru.mpei.tkz.services.SolverService;
@@ -55,6 +57,41 @@ public class ThreePhaseEquipmentTest {
         assertEquals(new Complex(11, 11), round(loadCurrents.getDataA()));
         assertEquals(new Complex(4.026, -15.026), round(loadCurrents.getDataB()));
         assertEquals(new Complex(-15.026, 4.026), round(loadCurrents.getDataC()));
+    }
+
+    @Test
+    public void schemeWithThreePhaseTransformer() {
+        ThreePhaseComplexVoltageSource e = new ThreePhaseComplexVoltageSource("e", 2200, 0);
+        ThreePhaseComplexLoad load = new ThreePhaseComplexLoad("load", 100, 0, 0, LoadType.R);
+        ThreePhaseComplexYgDTransformer transformer = new ThreePhaseComplexYgDTransformer(
+                "transformer",
+                3.183, 12.732, 3.8197,
+                200,
+                1800
+        );
+        ThreePhaseComplexGround ground = new ThreePhaseComplexGround();
+
+        ThreePhaseConnections<Complex> connections = new ThreePhaseConnections<>();
+        connections.connectEquipment(ground, e, Side.START);
+        connections.connectEquipment(e, Side.END, transformer, Side.START);
+        connections.connectEquipment(transformer, Side.END, load, Side.START);
+        connections.connectEquipment(ground, load, Side.END);
+
+        Scheme<Complex> scheme = new ComplexScheme();
+
+        scheme.addEquipments(e.getEquipment());
+        scheme.addEquipments(load.getEquipment());
+        scheme.addCoupledEquipments(transformer.getSinglePhaseTransformers().toArray(new CoupledCoils[0]));
+
+
+        long start = System.currentTimeMillis();
+        SolverService<Complex> solverService = new SolverService<>();
+        FieldVector<Complex> solution = solverService.solveScheme(scheme);
+        scheme.updateScheme(solution);
+        System.out.println(System.currentTimeMillis() - start);
+
+        System.out.println(transformer.getHvVoltage());
+        System.out.println(transformer.getLvVoltage());
     }
 
     private Complex round(Complex val) {

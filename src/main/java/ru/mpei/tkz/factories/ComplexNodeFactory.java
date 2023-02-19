@@ -3,7 +3,9 @@ package ru.mpei.tkz.factories;
 import org.apache.commons.math3.complex.Complex;
 import ru.mpei.tkz.models.nodes.ComplexNode;
 import ru.mpei.tkz.models.nodes.Node;
+import ru.mpei.tkz.models.nodes.three_phase_nodes.ThreePhaseComplexGround;
 import ru.mpei.tkz.models.nodes.three_phase_nodes.ThreePhaseComplexNode;
+import ru.mpei.tkz.models.nodes.three_phase_nodes.ThreePhaseGround;
 import ru.mpei.tkz.models.nodes.three_phase_nodes.ThreePhaseNode;
 
 import java.util.HashMap;
@@ -26,6 +28,11 @@ public class ComplexNodeFactory implements NodesFactory<Complex> {
     @Override
     public Node<Complex> getGround() {
         return ground;
+    }
+
+    @Override
+    public ThreePhaseGround<Complex> getThreePhaseGround() {
+        return new ThreePhaseComplexGround();
     }
 
     @Override

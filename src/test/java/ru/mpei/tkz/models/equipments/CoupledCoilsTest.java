@@ -1,4 +1,4 @@
-package ru.mpei.tkz.models;
+package ru.mpei.tkz.models.equipments;
 
 import org.apache.commons.math3.complex.Complex;
 import org.junit.jupiter.api.Test;
@@ -10,18 +10,18 @@ import ru.mpei.tkz.models.equipments.base_equipment.Resistance;
 import ru.mpei.tkz.models.equipments.base_equipment.VoltageSource;
 import ru.mpei.tkz.models.equipments.complex_equipment.ComplexResistance;
 import ru.mpei.tkz.models.equipments.complex_equipment.ComplexVoltageSource;
-import ru.mpei.tkz.models.equipments.complex_equipment.composite.SimpleComplexTransformer;
-import ru.mpei.tkz.models.equipments.composite_equipment.SimpleTransformer;
+import ru.mpei.tkz.models.equipments.complex_equipment.composite.ComplexCoupledCoils;
+import ru.mpei.tkz.models.equipments.composite_equipment.CoupledCoils;
 import ru.mpei.tkz.services.SolverService;
 
-import static ru.mpei.tkz.Helpers.*;
+import static ru.mpei.tkz.models.Helpers.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class SimpleTransformerTest {
+public class CoupledCoilsTest {
 
     @Test
     public void transformerWithEdsTest() {
-        SimpleTransformer<Complex> transformer = new SimpleComplexTransformer("t", 3.183, 12.732, 3.8197);
+        CoupledCoils<Complex> transformer = new ComplexCoupledCoils("t", 3.183, 12.732, 3.8197);
         VoltageSource<Complex> eds = new ComplexVoltageSource("eds", 283.5, -140);
         Resistance<Complex> r1 = new ComplexResistance("r1", 200);
         Resistance<Complex> r2 = new ComplexResistance("r2", 1800);
@@ -36,7 +36,9 @@ public class SimpleTransformerTest {
         connections.connectEquipment(transformer.getXl2(), Side.END, r2, Side.START);
 
         Scheme<Complex> scheme = new ComplexScheme();
+
         scheme.addEquipments(eds, transformer.getXl1(), transformer.getXl2(), r1, r2);
+
         scheme.coupleInductances(transformer.getCoupledInductances());
 
         SolverService<Complex> solver = new SolverService<>();

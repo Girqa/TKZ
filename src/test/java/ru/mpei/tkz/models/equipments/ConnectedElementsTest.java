@@ -1,4 +1,4 @@
-package ru.mpei.tkz.models;
+package ru.mpei.tkz.models.equipments;
 
 import org.apache.commons.math3.complex.Complex;
 import org.apache.commons.math3.linear.FieldVector;
