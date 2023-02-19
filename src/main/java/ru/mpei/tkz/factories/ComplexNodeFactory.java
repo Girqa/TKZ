@@ -11,7 +11,8 @@ import java.util.Map;
 
 
 public class ComplexNodeFactory implements NodesFactory<Complex> {
-    private static final Map<String, Node<Complex>> nodesPull = new HashMap<>();
+    private static final Node<Complex> ground = new ComplexNode("ground node");
+    private static final Map<String, Node<Complex>> pointNodes = new HashMap();
     @Override
     public ThreePhaseNode<Complex> getThreePhaseNode(String name, Node<Complex> a, Node<Complex> b, Node<Complex> c) {
         return new ThreePhaseComplexNode(name, a, b, c);
@@ -19,9 +20,19 @@ public class ComplexNodeFactory implements NodesFactory<Complex> {
 
     @Override
     public Node<Complex> getNode(String name) {
-        if (!nodesPull.containsKey(name)) {
-            nodesPull.put(name, new ComplexNode(name));
+        return new ComplexNode(name);
+    }
+
+    @Override
+    public Node<Complex> getGround() {
+        return ground;
+    }
+
+    @Override
+    public Node<Complex> getPointNode(String name) {
+        if (!pointNodes.containsKey(name)) {
+            pointNodes.put(name, new ComplexNode(name));
         }
-        return nodesPull.get(name);
+        return pointNodes.get(name);
     }
 }

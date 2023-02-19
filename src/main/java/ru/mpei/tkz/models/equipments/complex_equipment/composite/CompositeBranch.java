@@ -1,4 +1,4 @@
-package ru.mpei.tkz.models.equipments.composite_equipment;
+package ru.mpei.tkz.models.equipments.complex_equipment.composite;
 
 import org.apache.commons.math3.FieldElement;
 import ru.mpei.tkz.models.equipments.Equipment;
@@ -38,16 +38,6 @@ public class CompositeBranch<T extends FieldElement<T>> extends Equipment<T> {
     }
 
     @Override
-    public Node<T> getStartNode() {
-        return equipment.get(0).getStartNode();
-    }
-
-    @Override
-    public Node<T> getEndNode() {
-        return equipment.get(equipment.size()-1).getEndNode();
-    }
-
-    @Override
     public void setStartNode(Node<T> startNode) {
         equipment.get(0).setStartNode(startNode);
         this.startNode = startNode;
@@ -63,7 +53,8 @@ public class CompositeBranch<T extends FieldElement<T>> extends Equipment<T> {
     public T getEquipmentVoltage() {
         T voltage = equipment.get(0).getEquipmentVoltage();
         for (int i = 1; i < equipment.size(); i++) {
-            voltage.add(equipment.get(i).getEquipmentVoltage());
+            T addVoltage = equipment.get(i).getEquipmentVoltage();
+            voltage = voltage.add(addVoltage);
         }
         return voltage;
     }

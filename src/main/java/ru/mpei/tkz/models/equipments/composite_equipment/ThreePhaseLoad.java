@@ -1,4 +1,4 @@
-package ru.mpei.tkz.models.equipments.composite_equipment.load;
+package ru.mpei.tkz.models.equipments.composite_equipment;
 
 import org.apache.commons.math3.FieldElement;
 import ru.mpei.tkz.factories.SchemeEquipmentFactory;
@@ -7,8 +7,7 @@ import ru.mpei.tkz.models.connections.Connections;
 import ru.mpei.tkz.models.enums.LoadType;
 import ru.mpei.tkz.models.enums.Side;
 import ru.mpei.tkz.models.equipments.Equipment;
-import ru.mpei.tkz.models.equipments.composite_equipment.CompositeBranch;
-import ru.mpei.tkz.models.equipments.composite_equipment.CompositeThreePhaseEquipment;
+import ru.mpei.tkz.models.equipments.complex_equipment.composite.CompositeBranch;
 
 import java.util.ArrayList;
 import java.util.Collection;

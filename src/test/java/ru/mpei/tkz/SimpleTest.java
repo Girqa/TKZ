@@ -52,11 +52,11 @@ public class SimpleTest {
         ComplexNode n4 = new ComplexNode("n4");
         ComplexNode n5 = new ComplexNode("n5");
 
-        ComplexVoltageSource e = new ComplexVoltageSource("e", n1, n2, 100, 0);
-        ComplexResistance r1 = new ComplexResistance("r1", n2, n3, 10);
-        ComplexResistance r2 = new ComplexResistance("r2", n5, n4, 10);
-        ComplexInductance xl1 = new ComplexInductance("xl1", n3, n1, 0.0318);
-        ComplexInductance xl2 = new ComplexInductance("xl2", n4, n5, 0.0318);
+        ComplexVoltageSource e = new ComplexVoltageSource("e", n1, n2, 283.5, -140);
+        ComplexResistance r1 = new ComplexResistance("r1", n2, n3, 200);
+        ComplexResistance r2 = new ComplexResistance("r2", n5, n4, 1800);
+        ComplexInductance xl1 = new ComplexInductance("xl1", n3, n1, 3.183);
+        ComplexInductance xl2 = new ComplexInductance("xl2", n4, n5, 12.732);
 
         ComplexScheme scheme = new ComplexScheme();
         scheme.addEquipment(e);
@@ -64,14 +64,13 @@ public class SimpleTest {
         scheme.addEquipment(r2);
         scheme.addEquipment(xl1);
         scheme.addEquipment(xl2);
-        scheme.bindInductances(xl1, xl2, new Complex(0, 10));
+        scheme.coupleInductances(xl1, xl2, new Complex(0, 3.8197 * 2 *Math.PI*50));
 
         SolverService<Complex> solver = new SolverService<>();
         FieldVector<Complex> solution = solver.solveScheme(scheme);
         scheme.updateScheme(solution);
 
         System.out.println(translateComplex(r1.getEquipmentCurrent()));
-        System.out.println(translateComplex(r2.getEquipmentCurrent()));
     }
 
     private void showVector(FieldVector<Complex> vector) {

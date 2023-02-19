@@ -27,7 +27,7 @@ public class Connection<T extends FieldElement<T>> {
      * @throws IllegalArgumentException if given connected node is not a nod of given equipment
      */
     public void connectEquipment(Equipment<T> equipment, Node<T> connectedNode) throws IllegalArgumentException {
-        if (!equipment.getStartNode().equals(connectedNode) && equipment.getEndNode().equals(connectedNode)) {
+        if (!equipment.getStartNode().equals(connectedNode) && !equipment.getEndNode().equals(connectedNode)) {
             throw new IllegalArgumentException("Given equipment doesn't contain 'connectedNode'");
         }
         connectedNodesByEquipment.put(equipment, connectedNode);

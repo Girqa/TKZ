@@ -30,6 +30,7 @@ public class ThreePhaseConnections<T extends FieldElement<T>> {
                 new ThreePhaseConnection<>(connectionNode)
         );
         connection.connectEquipment(connectedEquipment, side);
+        connectionsByNodes.put(connectionNode, connection);
     }
 
     /**
@@ -44,20 +45,8 @@ public class ThreePhaseConnections<T extends FieldElement<T>> {
                                  CompositeThreePhaseEquipment<T> connectedEq,
                                  Side whichSideConnect) {
         switch (toWhichSideConnect) {
-            case START -> {
-                ThreePhaseConnection<T> connection = connectionsByNodes.getOrDefault(
-                        connectionEq.getStartNode(),
-                        new ThreePhaseConnection<>(connectionEq.getStartNode()));
-                connection.connectEquipment(connectedEq, whichSideConnect);
-                connectionsByNodes.put(connectedEq.getStartNode(), connection);
-            }
-            case END -> {
-                ThreePhaseConnection<T> connection = connectionsByNodes.getOrDefault(
-                        connectionEq.getEndNode(),
-                        new ThreePhaseConnection<>(connectionEq.getEndNode()));
-                connection.connectEquipment(connectedEq, whichSideConnect);
-                connectionsByNodes.put(connectedEq.getEndNode(), connection);
-            }
+            case START -> connectEquipment(connectionEq.getStartNode(), connectedEq, whichSideConnect);
+            case END -> connectEquipment(connectionEq.getEndNode(), connectedEq, whichSideConnect);
         }
     }
 

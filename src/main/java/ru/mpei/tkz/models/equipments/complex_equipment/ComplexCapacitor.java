@@ -28,6 +28,6 @@ public class ComplexCapacitor extends Capacitor<Complex> {
                             double capacity,
                             double frequency) {
         super(name, startNode, endNode);
-        this.resistance = new Complex(0, -1 / (2 * Math.PI * frequency));
+        this.resistance = new Complex(0, -1 / (2 * Math.PI * frequency * capacity));
     }
 }

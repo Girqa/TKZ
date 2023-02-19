@@ -43,13 +43,14 @@ public class Connections<T extends FieldElement<T>> {
      */
     public void connectEquipment(Node<T> connectionNode, Equipment<T> connectedEquipment, Side side) {
         Connection<T> connection = connectionsByNodes.getOrDefault(connectionNode, new Connection<>(connectionNode));
-
         switch (side) {
             case START -> {
                 connection.connectEquipment(connectedEquipment, connectedEquipment.getStartNode());
+                connectionsByNodes.put(connectionNode, connection);
             }
             case END -> {
                     connection.connectEquipment(connectedEquipment, connectedEquipment.getEndNode());
+                    connectionsByNodes.put(connectionNode, connection);
             }
         }
     }

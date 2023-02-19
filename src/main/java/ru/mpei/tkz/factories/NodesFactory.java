@@ -7,4 +7,6 @@ import ru.mpei.tkz.models.nodes.three_phase_nodes.ThreePhaseNode;
 public interface NodesFactory<T extends FieldElement<T>> {
     ThreePhaseNode<T> getThreePhaseNode(String name, Node<T> a, Node<T> b, Node<T> c);
     Node<T> getNode(String name);
+    Node<T> getGround();
+    Node<T> getPointNode(String name);
 }

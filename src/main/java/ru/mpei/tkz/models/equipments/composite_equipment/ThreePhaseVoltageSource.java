@@ -1,10 +1,9 @@
-package ru.mpei.tkz.models.equipments.composite_equipment.voltage_sources;
+package ru.mpei.tkz.models.equipments.composite_equipment;
 
 import org.apache.commons.math3.FieldElement;
 import ru.mpei.tkz.factories.SchemeEquipmentFactory;
 import ru.mpei.tkz.factories.NodesFactory;
 import ru.mpei.tkz.models.equipments.Equipment;
-import ru.mpei.tkz.models.equipments.composite_equipment.CompositeThreePhaseEquipment;
 
 import java.util.*;
 
@@ -15,6 +14,7 @@ public abstract class ThreePhaseVoltageSource<T extends FieldElement<T>> extends
     public ThreePhaseVoltageSource(String name, double voltage, double phase,
                                    SchemeEquipmentFactory<T> equipmentFactory, NodesFactory<T> nodesFactory) {
         this.type = "three-phase voltage source";
+        this.name = name;
         Equipment<T> eA = equipmentFactory.getVoltageSource(name + "_phaseA", voltage, phase);
         Equipment<T> eB = equipmentFactory.getVoltageSource(name + "_phaseB", voltage, phase - 120);
         Equipment<T> eC = equipmentFactory.getVoltageSource(name + "_phaseC", voltage, phase + 120);

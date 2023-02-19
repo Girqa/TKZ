@@ -5,9 +5,10 @@ import lombok.Data;
 import lombok.ToString;
 import org.apache.commons.math3.complex.Complex;
 import org.apache.commons.math3.linear.*;
+import ru.mpei.tkz.models.dto.MagneticallyCoupledInductors;
 import ru.mpei.tkz.models.dto.SchemeMatrixDto;
 import ru.mpei.tkz.models.equipments.Equipment;
-import ru.mpei.tkz.models.equipments.complex_equipment.ComplexInductance;
+import ru.mpei.tkz.models.equipments.base_equipment.Inductance;
 import ru.mpei.tkz.models.nodes.Node;
 
 import java.util.*;
@@ -76,6 +77,32 @@ public class ComplexScheme implements Scheme<Complex> {
         }
     }
 
+    /**
+     * Magnetically couples two inductances
+     * @param l1 - hv inductance, * will be at start node
+     * @param l2 - lv inductance, * will be at end node
+     */
+    @Override
+    public void coupleInductances(Inductance<Complex> l1, Inductance<Complex> l2, Complex mutualInduction)  throws IllegalArgumentException {
+        if (!indexesByEquipments.containsKey(l1)) {
+            throw new IllegalArgumentException("Scheme doesn't contain l1 equipment");
+        }
+        if (!indexesByEquipments.containsKey(l2)) {
+            throw new IllegalArgumentException("Scheme doesn't contain l2 equipment");
+        }
+        mutualInductanceConnections.add(
+                new MutualInductanceConnection(
+                        indexesByEquipments.get(l1),
+                        indexesByEquipments.get(l2),
+                        mutualInduction)
+        );
+    }
+
+    @Override
+    public void coupleInductances(MagneticallyCoupledInductors<Complex> data) throws IllegalArgumentException {
+        coupleInductances(data.getL1(), data.getL2(), data.getMutualInduction());
+    }
+
     @Override
     public SchemeMatrixDto<Complex> getSchemeMatrices() {
         cleanNodesPotentials();
@@ -116,26 +143,6 @@ public class ComplexScheme implements Scheme<Complex> {
                 .getSolver()
                 .getInverse();
         return new SchemeMatrixDto<>(A, Y, J, E);
-    }
-
-    /**
-     * Magnetically binds two inductances
-     * @param l1 - hv inductance, * will be at start node
-     * @param l2 - lv inductance, * will be at end node
-     */
-    public void bindInductances(ComplexInductance l1, ComplexInductance l2, Complex mutualInduction)  throws IllegalArgumentException {
-        if (!indexesByEquipments.containsKey(l1)) {
-            throw new IllegalArgumentException("Scheme doesn't contain l1 equipment");
-        }
-        if (!indexesByEquipments.containsKey(l2)) {
-            throw new IllegalArgumentException("Scheme doesn't contain l2 equipment");
-        }
-        mutualInductanceConnections.add(
-                new MutualInductanceConnection(
-                        indexesByEquipments.get(l1),
-                        indexesByEquipments.get(l2),
-                        mutualInduction)
-        );
     }
 
     private void cleanNodesPotentials() {

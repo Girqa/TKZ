@@ -11,9 +11,9 @@ public abstract class ThreePhaseGround<T extends FieldElement<T>> extends ThreeP
      */
     public ThreePhaseGround(NodesFactory<T> nodesFactory) {
         super("ground node",
-                nodesFactory.getNode("ground node"),
-                nodesFactory.getNode("ground node"),
-                nodesFactory.getNode("ground node"));
+                nodesFactory.getGround(),
+                nodesFactory.getGround(),
+                nodesFactory.getGround());
     }
 
     public ThreePhaseGround(String name, Node<T> nA, Node<T> nB, Node<T> nC) throws Exception {
